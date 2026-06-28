@@ -134,11 +134,7 @@ const ogImage = ogImageUrl
 
     <article
       id="article"
-      class:list={[
-        "mt-8 w-full",
-        "app-prose max-w-app",
-        "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)",
-      ]}
+      class:list={["mt-8 w-full", "app-prose max-w-app"]}
     >
       <Content />
     </article>
@@ -215,55 +211,9 @@ const ogImage = ogImageUrl
   }
   addHeadingLinks();
 
-  function attachCopyButtons() {
-    const copyButtonLabel = "Copy";
-    // Exclude astro-mermaid diagram wrappers (<pre class="mermaid">): the copy
-    // button would otherwise inject "Copy" text into the diagram source and
-    // corrupt rendering.
-    const codeBlocks = Array.from(
-      document.querySelectorAll("pre:not(.mermaid)")
-    );
-
-    for (const codeBlock of codeBlocks) {
-      const wrapper = document.createElement("div");
-      wrapper.style.position = "relative";
-
-      const computedStyle = getComputedStyle(codeBlock);
-      const hasFileNameOffset =
-        computedStyle.getPropertyValue("--file-name-offset").trim() !== "";
-
-      const topClass = hasFileNameOffset
-        ? "top-(--file-name-offset)"
-        : "-top-3";
-
-      const copyButton = document.createElement("button");
-      copyButton.className = `copy-code absolute end-3 ${topClass} rounded bg-muted border border-muted px-2 py-1 text-xs leading-4 text-foreground font-medium`;
-      copyButton.innerHTML = copyButtonLabel;
-      codeBlock.setAttribute("tabindex", "0");
-      codeBlock.appendChild(copyButton);
-
-      codeBlock?.parentNode?.insertBefore(wrapper, codeBlock);
-      wrapper.appendChild(codeBlock);
-
-      copyButton.addEventListener("click", async () => {
-        await copyCode(codeBlock, copyButton);
-      });
-    }
-
-    async function copyCode(block, button) {
-      const code = block.querySelector("code");
-      const text = code?.innerText;
-
-      await navigator.clipboard.writeText(text ?? "");
-
-      button.innerText = "Copied";
-
-      setTimeout(() => {
-        button.innerText = copyButtonLabel;
-      }, 700);
-    }
-  }
-  attachCopyButtons();
+  // Code-block copy buttons are provided by Expressive Code (frames plugin).
+  // AstroPaper's custom attachCopyButtons() was removed to avoid a duplicate
+  // button stacking on top of EC's, and because it selected every <pre>.
 
   /** Accessible image lightbox for article images. */
   function initLightbox() {

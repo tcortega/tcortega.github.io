@@ -14,12 +14,7 @@ import rehypeCallouts from "rehype-callouts";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import mermaid from "astro-mermaid";
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-} from "@shikijs/transformers";
-import { transformerFileName } from "./src/utils/transformers/fileName";
+import astroExpressiveCode from "astro-expressive-code";
 import config from "./astro-paper.config";
 
 export default defineConfig({
@@ -32,6 +27,11 @@ export default defineConfig({
       theme: "default",
       autoTheme: true,
     }),
+    // Must be registered BEFORE mdx() (EC throws an "Incorrect integration
+    // order" error otherwise) so it takes over code-block rendering for both
+    // .md and .mdx. Config lives in ec.config.mjs; EC sets
+    // markdown.syntaxHighlight=false, so the old shikiConfig is gone.
+    astroExpressiveCode(),
     mdx({
       // The custom markdown.processor below only governs .md files; give MDX
       // the same math plugins so equations also render in .mdx posts.
@@ -51,6 +51,9 @@ export default defineConfig({
     },
   },
   markdown: {
+    // Code-block syntax highlighting is handled by Expressive Code (ec.config.mjs),
+    // which sets markdown.syntaxHighlight=false. The unified() processor still
+    // owns TOC / collapse / callouts / math; EC composes its rehype step into it.
     processor: unified({
       remarkPlugins: [
         remarkToc,
@@ -59,17 +62,6 @@ export default defineConfig({
       ],
       rehypePlugins: [rehypeCallouts, rehypeKatex],
     }),
-    shikiConfig: {
-      themes: { light: "min-light", dark: "night-owl" },
-      defaultColor: false,
-      wrap: false,
-      transformers: [
-        transformerFileName({ style: "v2", hideDot: false }),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationDiff({ matchAlgorithm: "v3" }),
-      ],
-    },
   },
   vite: {
     plugins: [tailwindcss()],
