@@ -1,13 +1,12 @@
 ---
-title: Tailwind Typography Plugin
-author: Sat Naing
+title: "Formatting reference (local draft)"
+author: tcortega
 pubDatetime: 2022-07-05T02:05:51Z
 featured: false
-draft: false
+draft: true
 tags:
-  - TypeScript
-  - Astro
-description: "EXAMPLE POST: About Tailwind Typography Plugin and how you can use it effectively."
+  - reference
+description: "Local-only formatting cheatsheet — headings, lists, tables, quotes and code. draft:true keeps it out of production builds."
 ---
 
 > This article is from [TailwindLabs](https://tailwindcss-typography.vercel.app/). I put this article to demonstrate how you can write blog posts/articles using AstroPaper theme.
