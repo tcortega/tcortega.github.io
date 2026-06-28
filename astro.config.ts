@@ -11,6 +11,9 @@ import { unified } from "@astrojs/markdown-remark";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import rehypeCallouts from "rehype-callouts";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import mermaid from "astro-mermaid";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -22,7 +25,19 @@ import config from "./astro-paper.config";
 export default defineConfig({
   site: config.site.url,
   integrations: [
-    mdx(),
+    // Must run before mdx() so the mermaid-augmented markdown processor is in
+    // place. autoTheme watches <html data-theme="light|dark"> and re-renders:
+    // light -> mermaid "default", dark -> mermaid "dark" (matches AstroPaper).
+    mermaid({
+      theme: "default",
+      autoTheme: true,
+    }),
+    mdx({
+      // The custom markdown.processor below only governs .md files; give MDX
+      // the same math plugins so equations also render in .mdx posts.
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
+    }),
     sitemap({
       filter: page =>
         config.features?.showArchives !== false || !page.endsWith("/archives/"),
@@ -40,8 +55,9 @@ export default defineConfig({
       remarkPlugins: [
         remarkToc,
         [remarkCollapse, { test: "Table of contents" }],
+        remarkMath,
       ],
-      rehypePlugins: [rehypeCallouts],
+      rehypePlugins: [rehypeCallouts, rehypeKatex],
     }),
     shikiConfig: {
       themes: { light: "min-light", dark: "night-owl" },

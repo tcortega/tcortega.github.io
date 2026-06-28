@@ -2,6 +2,7 @@
 @import "./theme.css";
 @import "./typography.css";
 @import "rehype-callouts/theme/obsidian";
+@import "katex/dist/katex.min.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
@@ -35,4 +36,11 @@
 
 :target {
   scroll-margin-block: 1rem;
+}
+
+/* astro-mermaid: keep AstroPaper's Shiki code-block background off diagrams.
+   Unlayered so it beats the layered prose-pre:bg-(--shiki-*-bg) utility and
+   prevents a background flash before the integration hydrates the diagram. */
+pre.mermaid {
+  background-color: transparent;
 }

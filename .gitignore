@@ -31,3 +31,7 @@ public/pagefind
 
 # docker compose
 compose.override.yaml
+
+# local screenshots / playwright artifacts
+.playwright-mcp/
+/render-*.png

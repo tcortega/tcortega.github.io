@@ -121,3 +121,17 @@
     }
   }
 }
+
+/* LaTeX math (KaTeX) follows the AstroPaper theme foreground in light & dark.
+   Bind to the raw --foreground token (flips with [data-theme]) so equations
+   track the theme toggle with zero client JS. */
+.katex,
+.katex-display {
+  color: var(--foreground);
+}
+
+/* Let long display equations scroll instead of overflowing on mobile. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
