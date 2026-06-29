@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install, build, and upload the site
+        uses: withastro/action@v6
+        with:
+          # Match .nvmrc so CI and local builds use the same Node major.
+          node-version: 22
+          # AstroPaper's "build" script runs: astro check && astro build &&
+          # pagefind --site dist && cp pagefind into public. This is already
+          # withastro/action's default command, but set it explicitly so the
+          # Pagefind search index and the dynamic OG images are guaranteed to be
+          # produced inside the deployed artifact.
+          build-cmd: npm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        # v4 is the version paired with withastro/action@v6 in its official
+        # example and matches the Pages artifact the action uploads. (deploy-pages
+        # v5 exists but can mismatch that artifact format.)
+        uses: actions/deploy-pages@v4

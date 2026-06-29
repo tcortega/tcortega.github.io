@@ -18,6 +18,9 @@ import astroExpressiveCode from "astro-expressive-code";
 import config from "./astro-paper.config";
 
 export default defineConfig({
+  // `site` is read from astro-paper.config.ts (currently https://tcortega.dev/).
+  // No `base` is set: a custom domain (like a <user>.github.io repo) serves at
+  // the root. A project repo would instead need base: "/<repo>".
   site: config.site.url,
   integrations: [
     // Must run before mdx() so the mermaid-augmented markdown processor is in

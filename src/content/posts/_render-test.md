@@ -2,14 +2,15 @@
 title: "Render test (math + diagrams + code)"
 author: tcortega
 pubDatetime: 2026-06-01T00:00:00Z
-description: "Smoke test for KaTeX math, Mermaid diagrams, and syntax-highlighted code. Temporary — retire to _render-test.md (draft) when done."
+description: "Local-only render reference: KaTeX math, Mermaid diagrams, and Expressive Code features. Kept out of every build by the leading underscore + draft:true."
 tags:
   - test
-draft: false
+draft: true
 ---
 
-Local render check. This is a temporary published post used to verify the
-pipeline; it gets converted to a never-publish draft at the end of setup.
+Local render reference. The leading underscore in the filename excludes this
+from the content collection, and `draft: true` keeps it out of production —
+temporarily rename it to `render-test.md` if you want to preview it.
 
 ## Math (KaTeX)
 

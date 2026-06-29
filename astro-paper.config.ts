@@ -2,8 +2,9 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    // TODO(Phase 5): set to your final URL (GitHub Pages or custom domain).
-    url: "https://example.com/",
+    // Custom domain (likely tcortega.dev — NOT yet locked in). If the domain
+    // changes, update BOTH this url AND public/CNAME. No `base` needed (root).
+    url: "https://tcortega.dev/",
     title: ".text",
     description: "Notes from the executable section.",
     author: "tcortega",
