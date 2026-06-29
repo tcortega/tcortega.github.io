@@ -26,12 +26,11 @@ pnpm-debug.log*
 # pagefind
 public/pagefind
 
-# pnpm
-.pnpm-store
-
-# docker compose
-compose.override.yaml
-
 # local screenshots / playwright artifacts
 .playwright-mcp/
 /render-*.png
+
+# AI agent files — never commit
+CLAUDE.md
+AGENTS.md
+.claude/
