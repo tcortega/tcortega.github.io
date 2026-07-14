@@ -29,6 +29,14 @@ public/pagefind
 # local screenshots / playwright artifacts
 .playwright-mcp/
 /render-*.png
+/matt-home.png
+/xe-home.png
+/xe-note.png
+
+# throwaway design prototypes (Phase A design lab)
+/design-lab/
+/unstripped.html
+/unstripped*.png
 
 # AI agent files — never commit
 CLAUDE.md
