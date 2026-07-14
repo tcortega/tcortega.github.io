@@ -53,7 +53,9 @@
   --accent-foreground: var(--paper);
   --muted-foreground: var(--muted);
   --border: var(--panel-line);
-  --link: var(--accent);
+  /* Two-tone: interactive elements (links, filters, hovers) use a teal
+     second accent, distinct from the orange structural accent. */
+  --link: #2f6f66;
 }
 
 /* ---------------------------------------------------------------------------
@@ -76,5 +78,6 @@
   --accent-foreground: var(--paper);
   --muted-foreground: var(--muted);
   --border: var(--panel-line);
-  --link: var(--accent);
+  /* Two-tone teal, lifted for contrast on the dark paper. */
+  --link: #57ab9d;
 }

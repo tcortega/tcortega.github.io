@@ -46,17 +46,17 @@
     }
 
     a {
-      color: var(--accent);
+      color: var(--link);
       text-decoration: underline;
       text-decoration-style: dashed;
       text-underline-offset: 4px;
-      text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+      text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
       border-radius: 2px;
       overflow-wrap: break-word;
 
       &:hover {
         color: var(--ink);
-        background: color-mix(in srgb, var(--accent) 18%, transparent);
+        background: color-mix(in srgb, var(--link) 18%, transparent);
         text-decoration: none;
       }
     }

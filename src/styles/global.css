@@ -72,7 +72,7 @@ pre.mermaid {
 }
 
 .site-wordmark:hover {
-  color: var(--accent);
+  color: var(--link);
 }
 
 .theme-toggle {
@@ -95,7 +95,7 @@ pre.mermaid {
 
 .theme-toggle button[aria-pressed="true"],
 .theme-toggle button:hover {
-  color: var(--accent);
+  color: var(--link);
 }
 
 .theme-toggle .sep {
@@ -177,7 +177,7 @@ pre.mermaid {
 }
 
 .back-index:hover {
-  color: var(--accent);
+  color: var(--link);
 }
 
 /* --- INDEX rows (exact prototype flex) --- */
@@ -199,11 +199,11 @@ pre.mermaid {
 }
 
 .index-row:hover {
-  color: var(--accent);
+  color: var(--link);
 }
 
 .index-row:hover .index-title {
-  color: var(--accent);
+  color: var(--link);
 }
 
 .index-date {
@@ -275,7 +275,7 @@ pre.mermaid {
 .synopsis-line button:hover,
 .synopsis-line a.is-active,
 .synopsis-line button.is-active {
-  color: var(--accent);
+  color: var(--link);
 }
 
 /* --- dash lists --- */
@@ -319,11 +319,11 @@ pre.mermaid {
 }
 
 .see-also a:hover {
-  color: var(--accent);
+  color: var(--link);
 }
 
 .see-also .arrow {
-  color: var(--accent);
+  color: var(--link);
   margin-inline-end: 0.35rem;
 }
 
@@ -382,7 +382,7 @@ pre.mermaid {
 }
 
 .site-footer a:hover {
-  color: var(--accent);
+  color: var(--link);
 }
 
 .site-footer .brand {
