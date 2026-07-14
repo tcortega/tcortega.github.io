@@ -5,10 +5,18 @@ import { fontData, experimental_getFontFileURL } from "astro:assets";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
 import config from "@/config";
 
+const PAPER = "#f2efe6";
+const INK = "#1c1a16";
+const ACCENT = "#a2571a";
+const MUTED = "#6b655b";
+
 export const GET: APIRoute = async context => {
-  const fonts = fontData["--font-google-sans-code"];
+  const fonts = fontData["--font-ibm-plex-mono"];
   const regularFontPath = getFontPathByWeight(fonts, 400);
-  const boldFontPath = getFontPathByWeight(fonts, 700);
+  const mediumFontPath =
+    getFontPathByWeight(fonts, 600) ?? getFontPathByWeight(fonts, 500);
+  const boldFontPath =
+    getFontPathByWeight(fonts, 700) ?? mediumFontPath ?? regularFontPath;
 
   if (regularFontPath === undefined || boldFontPath === undefined) {
     throw new Error("Cannot find the font path.");
@@ -28,31 +36,51 @@ export const GET: APIRoute = async context => {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
+          background: PAPER,
           width: "100%",
           height: "100%",
           display: "flex",
-          alignItems: "center",
+          flexDirection: "column",
           justifyContent: "center",
-          fontFamily: "Google Sans Code",
+          padding: "80px 96px",
+          fontFamily: "IBM Plex Mono",
+          color: INK,
         },
         children: [
           {
             type: "div",
             props: {
               style: {
-                position: "absolute",
-                top: "-1px",
-                right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
-                opacity: "0.9",
-                borderRadius: "4px",
-                display: "flex",
-                justifyContent: "center",
-                margin: "2.5rem",
-                width: "88%",
-                height: "80%",
+                fontSize: 22,
+                fontWeight: 600,
+                letterSpacing: "0.16em",
+                color: ACCENT,
+                marginBottom: 28,
+              },
+              children: "NAME",
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                fontSize: 64,
+                fontWeight: 600,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.15,
+                marginBottom: 24,
+              },
+              children: "unstripped",
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                width: "100%",
+                height: 3,
+                background: INK,
+                marginBottom: 28,
               },
             },
           },
@@ -60,80 +88,25 @@ export const GET: APIRoute = async context => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
-                borderRadius: "4px",
-                display: "flex",
-                justifyContent: "center",
-                margin: "2rem",
-                width: "88%",
-                height: "80%",
+                fontSize: 28,
+                color: MUTED,
+                lineHeight: 1.4,
               },
-              children: {
-                type: "div",
-                props: {
-                  style: {
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    margin: "20px",
-                    width: "90%",
-                    height: "90%",
-                  },
-                  children: [
-                    {
-                      type: "div",
-                      props: {
-                        style: {
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: "90%",
-                          maxHeight: "90%",
-                          overflow: "hidden",
-                          textAlign: "center",
-                        },
-                        children: [
-                          {
-                            type: "p",
-                            props: {
-                              style: { fontSize: 72, fontWeight: "bold" },
-                              children: config.site.title,
-                            },
-                          },
-                          {
-                            type: "p",
-                            props: {
-                              style: { fontSize: 28 },
-                              children: config.site.description,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    {
-                      type: "div",
-                      props: {
-                        style: {
-                          display: "flex",
-                          justifyContent: "flex-end",
-                          width: "100%",
-                          marginBottom: "8px",
-                          fontSize: 28,
-                        },
-                        children: {
-                          type: "span",
-                          props: {
-                            style: { overflow: "hidden", fontWeight: "bold" },
-                            children: new URL(config.site.url).hostname,
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
+              children: config.site.description,
+            },
+          },
+          {
+            type: "div",
+            props: {
+              style: {
+                position: "absolute",
+                bottom: 48,
+                right: 96,
+                fontSize: 22,
+                color: MUTED,
+                letterSpacing: "0.04em",
               },
+              children: "unstripped.dev",
             },
           },
         ],
@@ -145,13 +118,13 @@ export const GET: APIRoute = async context => {
       embedFont: true,
       fonts: [
         {
-          name: "Google Sans Code",
+          name: "IBM Plex Mono",
           data: regularData,
           weight: 400,
           style: "normal",
         },
         {
-          name: "Google Sans Code",
+          name: "IBM Plex Mono",
           data: boldData,
           weight: 700,
           style: "normal",

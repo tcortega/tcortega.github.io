@@ -1,0 +1,38 @@
+---
+/**
+ * Paper note callout for MDX posts.
+ *
+ *   import Aside from "@/components/Aside.astro";
+ *   <Aside>Hardware breakpoints survive self-modifying writes.</Aside>
+ *   <Aside name="note">…with an optional lead-in.</Aside>
+ */
+type Props = {
+  name?: string;
+  class?: string;
+};
+
+const { name, class: className } = Astro.props;
+---
+
+<aside
+  class:list={[
+    "my-5 border border-[var(--panel-line)] border-s-2 border-s-[var(--accent)] bg-[var(--panel)] rounded-[var(--panel-radius)] px-4 py-3",
+    className,
+  ]}
+>
+  <div class="note-body text-[var(--ink)] text-sm leading-relaxed">
+    {
+      name && (
+        <span class="text-[var(--accent)] me-1.5 font-medium">{name}</span>
+      )
+    }
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .note-body :global(p) {
+    margin: 0;
+    display: inline;
+  }
+</style>

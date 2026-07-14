@@ -18,14 +18,12 @@ import astroExpressiveCode from "astro-expressive-code";
 import config from "./astro-paper.config";
 
 export default defineConfig({
-  // `site` is read from astro-paper.config.ts (currently https://tcortega.dev/).
-  // No `base` is set: a custom domain (like a <user>.github.io repo) serves at
-  // the root. A project repo would instead need base: "/<repo>".
+  // `site` is read from astro-paper.config.ts (https://unstripped.dev/).
+  // No `base` is set: custom domain serves at the root.
   site: config.site.url,
   integrations: [
     // Must run before mdx() so the mermaid-augmented markdown processor is in
-    // place. autoTheme watches <html data-theme="light|dark"> and re-renders:
-    // light -> mermaid "default", dark -> mermaid "dark" (matches AstroPaper).
+    // place. autoTheme watches <html data-theme="light|dark"> and re-renders.
     mermaid({
       theme: "default",
       autoTheme: true,
@@ -71,14 +69,17 @@ export default defineConfig({
   },
   fonts: [
     {
-      name: "Google Sans Code",
-      cssVariable: "--font-google-sans-code",
+      name: "IBM Plex Mono",
+      cssVariable: "--font-ibm-plex-mono",
       provider: fontProviders.google(),
       fallbacks: ["monospace"],
       weights: [300, 400, 500, 600, 700],
       styles: ["normal", "italic"],
       formats: ["woff", "ttf"],
     },
+    // The reading serif (the `Aa` toggle target) is Charter, self-hosted via
+    // @font-face in src/styles/fonts.css — it isn't on Google Fonts, so it's
+    // intentionally not managed by the Astro fonts pipeline here.
   ],
   env: {
     schema: {

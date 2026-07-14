@@ -12,10 +12,18 @@ const posts = defineCollection({
       author: z.string().default(config.site.author),
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),
+      // Short title for the INDEX list (must fit one line).
       title: z.string(),
+      // Optional long man-page NAME shown on the article page.
+      // Falls back to `title` when omitted.
+      name: z.string().optional(),
       featured: z.boolean().optional(),
       draft: z.boolean().optional(),
-      tags: z.array(z.string()).default(["others"]),
+      // Primary index filter: re | til | tut
+      category: z.enum(["re", "til", "tut"]).default("re"),
+      // Optional man-page SYNOPSIS line (CLI-style usage string)
+      synopsis: z.string().optional(),
+      tags: z.array(z.string()).default([]),
       ogImage: image().or(z.string()).optional(),
       description: z.string(),
       canonicalURL: z.string().optional(),

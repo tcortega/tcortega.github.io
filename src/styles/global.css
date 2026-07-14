@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./fonts.css";
 @import "./theme.css";
 @import "./typography.css";
 @import "rehype-callouts/theme/obsidian";
@@ -8,7 +9,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-accent/75;
+    box-sizing: border-box;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
   }
@@ -20,27 +21,386 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-}
-
-@utility max-w-app {
-  @apply max-w-3xl;
-}
-
-@utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
-}
-
-@utility active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+  html,
+  body {
+    margin: 0;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
 }
 
 :target {
   scroll-margin-block: 1rem;
 }
 
-/* astro-mermaid: keep AstroPaper's Shiki code-block background off diagrams.
-   Unlayered so it beats the layered prose-pre:bg-(--shiki-*-bg) utility and
-   prevents a background flash before the integration hydrates the diagram. */
 pre.mermaid {
   background-color: transparent;
+}
+
+/* ===========================================================================
+   UNSTRIPPED — single column shell (matches unstripped.html)
+   One max-width box owns header, content, and footer so nothing can drift
+   outside the hairline bounds.
+   =========================================================================== */
+
+.shell {
+  max-width: 788px;
+  margin: 0 auto;
+  padding: 22px 28px 64px;
+}
+
+/* --- header (inside shell) --- */
+.site-header-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.site-wordmark {
+  font: 500 11px/1 var(--font-body);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-wordmark:hover {
+  color: var(--accent);
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 9px;
+  align-items: baseline;
+  font: 500 11px/1 var(--font-body);
+  letter-spacing: 0.05em;
+}
+
+.theme-toggle button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--faint);
+  cursor: pointer;
+}
+
+.theme-toggle button[aria-pressed="true"],
+.theme-toggle button:hover {
+  color: var(--accent);
+}
+
+.theme-toggle .sep {
+  color: var(--panel-line);
+}
+
+.hairline {
+  height: 1px;
+  background: var(--hair);
+  margin: 14px 0 0;
+}
+
+/* --- page body --- */
+.page-body {
+  padding: 30px 0 0;
+}
+
+.section-label {
+  font: 600 11px/1 var(--font-body);
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+/* Indented body under a section label. Full column width unless .measure. */
+.section-body {
+  margin: 10px 0 26px 28px;
+}
+
+.section-body.measure {
+  max-width: 64ch;
+}
+
+.section-body.tight {
+  margin-bottom: 14px;
+}
+
+.section-body.last {
+  margin-bottom: 0;
+}
+
+.back-index {
+  display: inline-block;
+  margin-bottom: 26px;
+  font: 500 12px/1 var(--font-body);
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.back-index:hover {
+  color: var(--accent);
+}
+
+/* --- INDEX rows (exact prototype flex) --- */
+.index-list {
+  margin: 12px 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.index-row {
+  display: flex;
+  align-items: baseline;
+  padding: 5px 0;
+  color: var(--ink);
+  font: 400 12.5px/1.5 var(--font-body);
+  text-decoration: none;
+}
+
+.index-row:hover {
+  color: var(--accent);
+}
+
+.index-row:hover .index-title {
+  color: var(--accent);
+}
+
+.index-date {
+  color: var(--faint);
+  flex: none;
+  width: 86px;
+}
+
+.index-title {
+  color: inherit;
+  flex: none;
+}
+
+.index-leader {
+  flex: 1;
+  border-bottom: 1px dotted var(--dot);
+  margin: 0 8px;
+  min-width: 18px;
+  /* match prototype: lift the dotted rule to mid-x-height */
+  transform: translateY(-4px);
+}
+
+.index-cat {
+  color: var(--accent);
+  flex: none;
+  width: 28px;
+  text-align: right;
+}
+
+@media (max-width: 560px) {
+  .index-row {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+  .index-date {
+    width: auto;
+    margin-right: 10px;
+  }
+  .index-title {
+    flex: 1 1 auto;
+  }
+  .index-leader {
+    display: none;
+  }
+  .index-cat {
+    margin-left: auto;
+  }
+}
+
+/* --- SYNOPSIS filter --- */
+.synopsis-line {
+  margin: 10px 0 26px 28px;
+  font: 400 14px/1.7 var(--font-body);
+  color: var(--muted);
+}
+
+.synopsis-line a,
+.synopsis-line button {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.synopsis-line a:hover,
+.synopsis-line button:hover,
+.synopsis-line a.is-active,
+.synopsis-line button.is-active {
+  color: var(--accent);
+}
+
+/* --- dash lists --- */
+.dash-list {
+  margin: 10px 0 18px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 64ch;
+  list-style: none;
+  padding: 0;
+}
+
+.dash-list li {
+  display: flex;
+  gap: 12px;
+  font: 400 14px/1.65 var(--font-body);
+  color: var(--ink);
+}
+
+.dash-list li::before {
+  content: "—";
+  color: var(--accent);
+  flex: none;
+}
+
+/* --- SEE ALSO --- */
+.see-also {
+  margin: 12px 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+}
+
+.see-also a {
+  font: 400 13.5px/1.5 var(--font-body);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.see-also a:hover {
+  color: var(--accent);
+}
+
+.see-also .arrow {
+  color: var(--accent);
+  margin-inline-end: 0.35rem;
+}
+
+.see-also .meta {
+  color: var(--faint);
+}
+
+/* --- archive year bands (YEAR ───────) --- */
+.archive-year {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 34px 0 2px;
+}
+
+.archive-year-group:first-of-type .archive-year {
+  margin-top: 20px;
+}
+
+.archive-year-label {
+  font: 600 11px/1 var(--font-body);
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  flex: none;
+}
+
+.archive-year-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--hair);
+  opacity: 0.55;
+}
+
+/* --- footer sits under content, not stuck to the viewport bottom --- */
+.site-footer {
+  margin-top: 0;
+}
+
+.site-footer .hairline {
+  margin: 34px 0 12px;
+}
+
+.site-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font: 500 11px/1 var(--font-body);
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.site-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: var(--accent);
+}
+
+.site-footer .brand {
+  color: var(--ink);
+}
+
+.site-footer-links {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .site-footer-inner {
+    flex-wrap: wrap;
+    gap: 0.55rem 1rem;
+  }
+}
+
+/* Callouts */
+.app-prose .callout {
+  mix-blend-mode: normal;
+  border: 1px solid var(--panel-line);
+  border-inline-start: 2px solid var(--accent);
+  border-radius: var(--panel-radius);
+  background-color: var(--panel);
+  color: var(--ink);
+}
+.app-prose .callout-title {
+  color: var(--accent);
+}
+.app-prose .callout-title-icon,
+.app-prose .callout-title-icon svg {
+  color: var(--accent);
+  stroke: var(--accent);
+}
+.app-prose .callout-content,
+.app-prose .callout-content :is(p, li) {
+  color: var(--ink);
+}
+
+/* Legacy utility aliases so older pages still size correctly */
+@utility max-w-app {
+  max-width: 788px;
+}
+
+@utility app-layout {
+  max-width: 788px;
+  margin-inline: auto;
+  width: 100%;
+  padding-inline: 28px;
 }

@@ -3,11 +3,9 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
-import Breadcrumb from "@/components/Breadcrumb.astro";
-import Main from "@/components/Main.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
-import { postFilter } from "@/utils/postFilter";
+import { getSortedPosts } from "@/utils/getSortedPosts";
 import { getPostsByGroupCondition } from "./_utils/getPostsByGroupCondition";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -21,69 +19,70 @@ if (!config.features.showArchives && notFoundUrl) {
 }
 
 const t = useTranslations(locale);
+const homeHref = getRelativeLocaleUrl(locale, "");
 
 const posts = await getCollection("posts");
-const filteredPosts = posts.filter(postFilter);
-const monthFormatter = new Intl.DateTimeFormat(locale, { month: "long" });
+const sortedPosts = getSortedPosts(posts);
+
+// Group by publication year, most recent year first. Within each year the
+// order is inherited from getSortedPosts (recent-first), so no re-sort.
+const years = Object.entries(
+  getPostsByGroupCondition(sortedPosts, post =>
+    post.data.pubDatetime.getFullYear()
+  )
+).sort(([yearA], [yearB]) => Number(yearB) - Number(yearA));
 ---
 
 <Layout title={`${t.pages.archivesTitle} | ${config.site.title}`}>
   <Header />
+  <main id="main-content" class="page-body">
+    <a class="back-index" href={homeHref}>‹ index</a>
 
-  <Breadcrumb />
+    <div class="section-label">NAME</div>
+    <div
+      class="section-body"
+      style="font: 400 14.5px/1.6 var(--font-body); color: var(--ink);"
+    >
+      archive — complete index, {sortedPosts.length} posts, most recent first
+    </div>
 
-  <Main pageTitle={t.pages.archivesTitle} pageDesc={t.pages.archivesDesc}>
+    <div class="section-label">SYNOPSIS</div>
+    <div
+      class="synopsis-line"
+      id="synopsis-filters"
+      role="group"
+      aria-label="Filter posts by category"
+    >
+      unstripped
+      [<button type="button" data-filter="all" class="is-active">--all</button>]
+      [<button type="button" data-filter="re">--re</button>]
+      [<button type="button" data-filter="til">--til</button>]
+      [<button type="button" data-filter="tut">--tut</button>]
+    </div>
+
     {
-      Object.entries(
-        getPostsByGroupCondition(filteredPosts, post =>
-          post.data.pubDatetime.getFullYear()
-        )
-      )
-        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-        .map(([year, yearGroup]) => (
-          <div>
-            <span class="text-2xl font-bold">{year}</span>
-            <sup class="text-muted-foreground text-sm">{yearGroup.length}</sup>
-            {Object.entries(
-              getPostsByGroupCondition(
-                yearGroup,
-                post => post.data.pubDatetime.getMonth() + 1
-              )
-            )
-              .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
-              .map(([month, monthGroup]) => (
-                <div class="flex flex-col sm:flex-row">
-                  <div class="mt-6 min-w-36 text-lg sm:my-6">
-                    <span class="font-bold">
-                      {monthFormatter.format(
-                        new Date(2000, Number(month) - 1, 1)
-                      )}
-                    </span>
-                    <sup class="text-muted-foreground text-xs">
-                      {monthGroup.length}
-                    </sup>
-                  </div>
-                  <ul>
-                    {monthGroup
-                      .sort(
-                        (a, b) =>
-                          Math.floor(
-                            new Date(b.data.pubDatetime).getTime() / 1000
-                          ) -
-                          Math.floor(
-                            new Date(a.data.pubDatetime).getTime() / 1000
-                          )
-                      )
-                      .map(data => (
-                        <Card {...data} />
-                      ))}
-                  </ul>
-                </div>
-              ))}
+      years.map(([year, yearPosts]) => (
+        <section
+          class="archive-year-group"
+          data-year-group
+          aria-label={`Posts from ${year}`}
+        >
+          <div class="archive-year">
+            <span class="archive-year-label">{year}</span>
+            <span class="archive-year-rule" aria-hidden="true" />
           </div>
-        ))
+          <ul class="index-list">
+            {yearPosts.map(post => (
+              <Card {...post} />
+            ))}
+          </ul>
+        </section>
+      ))
     }
-  </Main>
-
-  <Footer />
+  </main>
+  <Footer centerLabel="archive" />
 </Layout>
+
+<script>
+  import "@/scripts/categoryFilter";
+</script>

@@ -2,34 +2,42 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import LinkButton from "@/components/LinkButton.astro";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
-const t = useTranslations(locale);
+const homeHref = getRelativeLocaleUrl(locale, "");
 ---
 
-<Layout title={`${t.notFound.title} | ${config.site.title}`}>
+<Layout title={`404 | ${config.site.title}`}>
   <Header />
+  <main id="main-content" class="page-body">
+    <div class="section-label">NAME</div>
+    <h1
+      class="section-body"
+      style="font: 600 22px/1.4 var(--font-body); color: var(--ink); letter-spacing: -0.01em;"
+    >
+      404 — no such symbol
+    </h1>
 
-  <main
-    id="main-content"
-    class="app-layout flex flex-1 items-center justify-center"
-  >
-    <div class="mb-14 flex flex-col items-center justify-center">
-      <h1 class="text-accent text-9xl font-bold">404</h1>
-      <span aria-hidden="true"> ¯\_(ツ)_/¯ </span>
-      <p class="mt-4 text-2xl sm:text-3xl">{t.notFound.message}</p>
-      <LinkButton
-        href={getRelativeLocaleUrl(locale, "")}
-        class="my-6 text-lg underline decoration-dashed underline-offset-8"
-      >
-        {t.notFound.goHome}
-      </LinkButton>
-    </div>
+    <div class="section-label">DESCRIPTION</div>
+    <p
+      class="section-body measure"
+      style="font: 400 14.5px/1.85 var(--font-body); color: var(--ink);"
+    >
+      That path isn't in the symbol table. It may have been stripped, renamed, or
+      never linked.
+    </p>
+
+    <div class="section-label">SEE ALSO</div>
+    <ul class="see-also">
+      <li>
+        <a href={homeHref}>
+          <span class="arrow">→</span>
+          index
+        </a>
+      </li>
+    </ul>
   </main>
-
-  <Footer />
+  <Footer centerLabel="404" />
 </Layout>

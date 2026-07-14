@@ -7,28 +7,74 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: var(--font-google-sans-code);
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-faint: var(--faint);
+  --color-dot: var(--dot);
+  --color-hair: var(--hair);
+  --color-panel: var(--panel);
+  --color-panel-line: var(--panel-line);
+  --color-tag: var(--tag);
+  --color-link: var(--link);
+
+  --font-app: var(--font-body);
 }
 
-/* Light theme values */
+/* ---------------------------------------------------------------------------
+   Typography: IBM Plex Mono only. No serif toggle.
+--------------------------------------------------------------------------- */
+:root {
+  --font-mono: var(--font-ibm-plex-mono);
+  --font-body: var(--font-mono);
+  --radius: 0px;
+  --panel-radius: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+   UNSTRIPPED — LIGHT (default). Paper notebook.
+--------------------------------------------------------------------------- */
 :root,
 [data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --accent-foreground: #ffffff;
-  --muted: #e6e6e6;
-  --muted-foreground: #6b7280;
-  --border: #ece9e9;
+  --paper: #f2efe6;
+  --ink: #1c1a16;
+  --muted: #6b655b;
+  --faint: #9a9384;
+  --dot: #cabfa9;
+  --hair: #1c1a16;
+  --accent: #a2571a;
+  --panel: #e9e4d7;
+  --panel-line: #ddd6c5;
+  --tag: #e5dfcf;
+
+  /* Tailwind / prose aliases */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --accent-foreground: var(--paper);
+  --muted-foreground: var(--muted);
+  --border: var(--panel-line);
+  --link: var(--accent);
 }
 
-/* Dark theme values */
+/* ---------------------------------------------------------------------------
+   UNSTRIPPED — DARK
+--------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --accent-foreground: #ffffff;
-  --muted: #343f60;
-  --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  --paper: #141210;
+  --ink: #e7e1d3;
+  --muted: #98907f;
+  --faint: #6b6455;
+  --dot: #39342b;
+  --hair: #c9c2b0;
+  --accent: #e0973a;
+  --panel: #1b1813;
+  --panel-line: #2a261e;
+  --tag: #251f18;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --accent-foreground: var(--paper);
+  --muted-foreground: var(--muted);
+  --border: var(--panel-line);
+  --link: var(--accent);
 }
