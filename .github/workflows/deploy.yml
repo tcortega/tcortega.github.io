@@ -26,6 +26,11 @@ jobs:
         with:
           # Match .nvmrc so CI and local builds use the same Node major.
           node-version: 22
+          # Disable the Astro build cache. Expressive Code caches highlighted
+          # output keyed by code content (not the theme), so a restored cache
+          # kept serving the old syntax colors after a theme change. Builds are
+          # only a few seconds; correctness beats the cache.
+          cache: false
           # AstroPaper's "build" script runs: astro check && astro build &&
           # pagefind --site dist && cp pagefind into public. This is already
           # withastro/action's default command, but set it explicitly so the
