@@ -140,8 +140,25 @@ function initLightbox(): void {
   });
 }
 
+// Project Expressive Code's language (on the inner <pre data-language>) onto the
+// frame header so CSS can render it as the header's right-hand meta, matching the
+// prototype's "filename … language" listing bar. Skip plain-text frames
+// (hexdumps, command output) where a "text" tag would just be noise.
+function labelCodeFrames(): void {
+  const IGNORED = new Set(["text", "plaintext", "ansi", ""]);
+  for (const frame of document.querySelectorAll(
+    ".expressive-code .frame.has-title"
+  )) {
+    const header = frame.querySelector<HTMLElement>(".header");
+    const lang = frame.querySelector("pre")?.getAttribute("data-language") ?? "";
+    if (!header || IGNORED.has(lang)) continue;
+    header.setAttribute("data-language", lang);
+  }
+}
+
 function setup(): void {
   addHeadingLinks();
+  labelCodeFrames();
   initLightbox();
 }
 

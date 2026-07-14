@@ -177,3 +177,53 @@
   overflow-x: auto;
   overflow-y: hidden;
 }
+
+/*
+ * Expressive Code frames — a panel container with a flat listing header,
+ * matching the unstripped hexdump/code prototype:
+ *   border:1px var(--panel-line); border-radius:6px; background:var(--panel)
+ * with the header and code body as transparent panes split by a hairline.
+ * The --panel background + border live on the container so both panes share it;
+ * this also neutralises Tailwind Typography's dark `pre` background, which was
+ * bleeding through in light mode.
+ */
+.app-prose .expressive-code .frame {
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.app-prose .expressive-code pre {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Header: flat bar, filename left + language right, hairline divider. */
+.expressive-code .frame .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--panel-line);
+  background: transparent;
+}
+
+.expressive-code .frame .title,
+.expressive-code .frame.is-terminal .title {
+  font: 500 10.5px/1 var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 1;
+}
+
+/* Right-hand meta: the code language, mirroring the prototype's header. The
+ * data-language is projected onto the header by scripts/postEnhancements.ts
+ * (Expressive Code puts it on the inner <pre>). */
+.expressive-code .frame .header[data-language]::after {
+  content: attr(data-language);
+  font: 500 10.5px/1 var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--faint);
+}

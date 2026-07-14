@@ -41,6 +41,16 @@ export default defineEcConfig({
       editorTabBarBackground: "var(--panel)",
       editorActiveTabBackground: "var(--panel)",
       terminalTitlebarBackground: "var(--panel)",
+      // Header reads as a flat listing bar (like the unstripped hexdump header):
+      // a hairline divider under a muted title, no tab indicator or window dots.
+      editorTabBarBorderBottomColor: "var(--panel-line)",
+      editorActiveTabBorderColor: "transparent",
+      editorActiveTabIndicatorTopColor: "transparent",
+      editorActiveTabIndicatorBottomColor: "transparent",
+      editorActiveTabForeground: "var(--muted)",
+      terminalTitlebarBorderBottomColor: "var(--panel-line)",
+      terminalTitlebarForeground: "var(--muted)",
+      terminalTitlebarDotsOpacity: "0",
     },
     textMarkers: {
       markBackground: "rgba(162, 87, 26, 0.15)",
