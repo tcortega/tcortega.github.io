@@ -1,0 +1,24 @@
+---
+// The man-page SYNOPSIS line: the re/til/tut category filter shared by the home
+// index and the archive. Interactive behavior lives in scripts/categoryFilter.ts
+// (imported below); it toggles rows by data-category and collapses empty year
+// bands on the archive. Single source of truth for the filter categories.
+---
+
+<div class="section-label">SYNOPSIS</div>
+<div
+  class="synopsis-line"
+  id="synopsis-filters"
+  role="group"
+  aria-label="Filter posts by category"
+>
+  unstripped
+  [<button type="button" data-filter="all" class="is-active">--all</button>]
+  [<button type="button" data-filter="re">--re</button>]
+  [<button type="button" data-filter="til">--til</button>]
+  [<button type="button" data-filter="tut">--tut</button>]
+</div>
+
+<script>
+  import "@/scripts/categoryFilter";
+</script>

@@ -5,6 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
+import CategoryFilter from "@/components/CategoryFilter.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import config from "@/config";
 
@@ -31,33 +32,18 @@ const archiveHref = getRelativeLocaleUrl(locale, "archives");
     </h1>
 
     <div class="section-label">NAME</div>
-    <div class="section-body" style="font: 400 14.5px/1.6 var(--font-body); color: var(--ink);">
+    <div class="section-body section-name">
       unstripped — reverse engineering notes, symbols included
     </div>
 
     <div class="section-label">DESCRIPTION</div>
-    <p
-      class="section-body measure"
-      style="font: 400 14px/1.8 var(--font-body); color: var(--ink);"
-    >
+    <p class="section-body measure section-prose">
       A working notebook for taking software apart: long-form reverse-engineering
       write-ups, short notes from the debugger, and the occasional tutorial. No
       trackers, no popups, no cookie banner — just the disassembly and what it meant.
     </p>
 
-    <div class="section-label">SYNOPSIS</div>
-    <div
-      class="synopsis-line"
-      id="synopsis-filters"
-      role="group"
-      aria-label="Filter posts by category"
-    >
-      unstripped
-      [<button type="button" data-filter="all" class="is-active">--all</button>]
-      [<button type="button" data-filter="re">--re</button>]
-      [<button type="button" data-filter="til">--til</button>]
-      [<button type="button" data-filter="tut">--tut</button>]
-    </div>
+    <CategoryFilter />
 
     <div class="section-label">INDEX</div>
     {
@@ -95,7 +81,3 @@ const archiveHref = getRelativeLocaleUrl(locale, "archives");
   </main>
   <Footer updated={latest} />
 </Layout>
-
-<script>
-  import "@/scripts/categoryFilter";
-</script>

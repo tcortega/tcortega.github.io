@@ -19,27 +19,18 @@ const homeHref = getRelativeLocaleUrl(locale, "");
     <a class="back-index" href={homeHref}>‹ index</a>
 
     <div class="section-label">NAME</div>
-    <h1
-      class="section-body"
-      style="font: 600 22px/1.4 var(--font-body); color: var(--ink); letter-spacing: -0.01em;"
-    >
+    <h1 class="section-body section-title">
       about — who runs unstripped, and why it exists
     </h1>
 
     <div class="section-label">DESCRIPTION</div>
-    <p
-      class="section-body tight measure"
-      style="font: 400 14.5px/1.85 var(--font-body); color: var(--ink);"
-    >
+    <p class="section-body tight measure section-prose">
       I'm a developer and reverse engineer. unstripped is where I keep the notes
       I wish I'd found earlier — how a protector actually comes apart, what an
       anti-debug flag looks like in a disassembler, the one gdb trick that saved
       an afternoon.
     </p>
-    <p
-      class="section-body measure"
-      style="font: 400 14.5px/1.85 var(--font-body); color: var(--ink);"
-    >
+    <p class="section-body measure section-prose">
       Long write-ups when a target earns them, short TILs when it doesn't.
       Everything here is hand-written and hand-broken — no trackers, no
       newsletter, no generated filler. If a post saved you an afternoon, that was
@@ -58,10 +49,7 @@ const homeHref = getRelativeLocaleUrl(locale, "");
     </ul>
 
     <div class="section-label">CONTACT</div>
-    <div
-      class="section-body last"
-      style="font: 400 13.5px/1.6 var(--font-body); color: var(--muted);"
-    >
+    <div class="section-body last section-meta">
       unstripped &nbsp;⟨<a
         href="mailto:hello@unstripped.dev"
         style="color: inherit;">hello@unstripped.dev</a
