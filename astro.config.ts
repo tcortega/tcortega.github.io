@@ -77,9 +77,6 @@ export default defineConfig({
       styles: ["normal", "italic"],
       formats: ["woff", "ttf"],
     },
-    // The reading serif (the `Aa` toggle target) is Charter, self-hosted via
-    // @font-face in src/styles/fonts.css — it isn't on Google Fonts, so it's
-    // intentionally not managed by the Astro fonts pipeline here.
   ],
   env: {
     schema: {

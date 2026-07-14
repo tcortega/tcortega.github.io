@@ -13,7 +13,6 @@ export default defineAstroPaperConfig({
     dir: "ltr",
   },
   posts: {
-    perPage: 50,
     perIndex: 15,
     scheduledPostMargin: 15 * 60 * 1000,
   },
@@ -22,15 +21,5 @@ export default defineAstroPaperConfig({
     dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
-    editPost: {
-      enabled: false,
-    },
-    // Pagefind still builds at deploy time; chrome does not surface search in v1.
-    search: false,
   },
-  socials: [
-    { name: "github", url: "https://github.com/tcortega" },
-    { name: "mail", url: "mailto:hello@unstripped.dev" },
-  ],
-  shareLinks: [],
 });
