@@ -60,16 +60,16 @@
    UNSTRIPPED — DARK
 --------------------------------------------------------------------------- */
 [data-theme="dark"] {
-  --paper: #141210;
-  --ink: #e7e1d3;
-  --muted: #98907f;
-  --faint: #6b6455;
-  --dot: #39342b;
-  --hair: #c9c2b0;
-  --accent: #e0973a;
-  --panel: #1b1813;
-  --panel-line: #2a261e;
-  --tag: #251f18;
+  --paper: #1b1712;
+  --ink: #ece5d5;
+  --muted: #a79d89;
+  --faint: #7c7360;
+  --dot: #474030;
+  --hair: #d2cab7;
+  --accent: #cc7a3c;
+  --panel: #241f18;
+  --panel-line: #342e22;
+  --tag: #2b241b;
 
   --background: var(--paper);
   --foreground: var(--ink);
