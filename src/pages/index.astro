@@ -13,8 +13,6 @@ const locale = Astro.currentLocale ?? config.site.lang;
 const posts = await getCollection("posts");
 const sortedPosts = getSortedPosts(posts);
 const recent = sortedPosts.slice(0, config.posts.perIndex);
-const latest =
-  sortedPosts[0]?.data.modDatetime ?? sortedPosts[0]?.data.pubDatetime;
 
 // Cross-reference the full archive only once the home index no longer shows
 // everything.
@@ -79,5 +77,5 @@ const archiveHref = getRelativeLocaleUrl(locale, "archives");
       )
     }
   </main>
-  <Footer updated={latest} />
+  <Footer />
 </Layout>
