@@ -7,18 +7,22 @@ import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const homeHref = getRelativeLocaleUrl(locale, "");
+const archiveHref = getRelativeLocaleUrl(locale, "archives");
 ---
 
 <Layout title={`404 | ${config.site.title}`}>
   <Header />
   <main id="main-content" class="page-body">
-    <div class="section-label">NAME</div>
-    <h1 class="section-body section-title">404 — no such symbol</h1>
-
-    <div class="section-label">DESCRIPTION</div>
-    <p class="section-body measure section-prose">
-      That path isn't in the symbol table. It may have been stripped, renamed, or
-      never linked.
+    <div class="section-label">ERROR 404</div>
+    <p class="section-body section-prose" style="margin-bottom: 6px;">
+      No manual entry for <span
+        id="req-path"
+        style="color: var(--accent); overflow-wrap: anywhere;"
+        >the requested page</span
+      >
+    </p>
+    <p class="section-body section-meta" style="margin-top: 0;">
+      unstripped: nothing appropriate.
     </p>
 
     <div class="section-label">SEE ALSO</div>
@@ -26,10 +30,25 @@ const homeHref = getRelativeLocaleUrl(locale, "");
       <li>
         <a href={homeHref}>
           <span class="arrow">→</span>
-          index
+          index<span class="meta">(1)</span>
+          <span class="meta"> — the full post listing</span>
+        </a>
+      </li>
+      <li>
+        <a href={archiveHref}>
+          <span class="arrow">→</span>
+          archive<span class="meta">(1)</span>
+          <span class="meta"> — everything, by year</span>
         </a>
       </li>
     </ul>
   </main>
   <Footer />
 </Layout>
+
+<script is:inline>
+  // GitHub Pages serves /404.html but keeps the requested (missing) path in the
+  // URL, so location.pathname is the route the reader actually asked for.
+  const el = document.getElementById("req-path");
+  if (el) el.textContent = window.location.pathname;
+</script>
