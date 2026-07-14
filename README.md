@@ -1,9 +1,11 @@
-# .text
+# unstripped.dev
 
-Notes from the executable section — a developer & reverse-engineering blog.
+Reverse engineering notes, symbols included.
 
-Built with [Astro](https://astro.build) and the [AstroPaper](https://github.com/satnaing/astro-paper)
-theme, plus KaTeX math, Mermaid diagrams, and Expressive Code.
+A working notebook for taking software apart: long-form reverse-engineering
+write-ups, short notes from the debugger, and the occasional tutorial.
+
+Built with [Astro](https://astro.build), KaTeX, Mermaid, and Expressive Code.
 
 ## Develop
 
@@ -15,5 +17,7 @@ npm run preview   # serve the production build locally
 ```
 
 - Posts live in `src/content/posts/` (`title`, `description`, `pubDatetime` required).
+  Optional: `category` (`re` | `til` | `tut`), `synopsis`, `tags`.
   Files prefixed with `_` or marked `draft: true` are excluded from the build.
 - Deploys to GitHub Pages on push to `main` via `.github/workflows/deploy.yml`.
+- Custom domain: `unstripped.dev` (`public/CNAME`).
