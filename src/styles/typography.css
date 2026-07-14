@@ -200,12 +200,15 @@
   border-radius: 0;
 }
 
-/* Header: flat bar, filename left + language right, hairline divider. */
+/* Header: flat bar, filename left + language right, hairline divider.
+ * margin:0 removes the figcaption margin Tailwind Typography adds, which
+ * otherwise leaves dead space above the header and below the divider. */
 .expressive-code .frame .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 12px;
+  margin: 0;
+  padding: 5px 12px;
   border-bottom: 1px solid var(--panel-line);
   background: transparent;
 }
