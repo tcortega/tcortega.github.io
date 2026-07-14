@@ -16,7 +16,9 @@ type Props = {
 
 const { prevPost, nextPost } = Astro.props;
 const locale = Astro.currentLocale ?? config.site.lang;
-const items = [nextPost, prevPost].filter(Boolean) as NonNullable<AdjacentPost>[];
+const items = [nextPost, prevPost].filter(
+  (p): p is NonNullable<AdjacentPost> => p != null
+);
 ---
 
 {

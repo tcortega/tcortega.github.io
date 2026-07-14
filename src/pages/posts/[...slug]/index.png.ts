@@ -1,10 +1,11 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { fontData, experimental_getFontFileURL } from "astro:assets";
 import satori from "satori";
 import sharp from "sharp";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
 import { getPostSlug } from "@/utils/getPostPaths";
+import { postFilter } from "@/utils/postFilter";
 import config from "@/config";
 
 const PAPER = "#f2efe6";
@@ -17,8 +18,10 @@ export async function getStaticPaths() {
     return [];
   }
 
+  // Same visibility rule as the post pages (excludes drafts and scheduled
+  // posts), and skip posts that ship their own ogImage.
   const posts = await getCollection("posts").then(p =>
-    p.filter(({ data }) => !data.draft && !data.ogImage)
+    p.filter(post => postFilter(post) && !post.data.ogImage)
   );
 
   return posts.map(post => ({
@@ -52,8 +55,9 @@ export const GET: APIRoute = async ({ props, url }) => {
     ),
   ]);
 
-  const title = props.data.title as string;
-  const category = (props.data.category as string | undefined) ?? "re";
+  const { data } = props as CollectionEntry<"posts">;
+  const title = data.title;
+  const category = data.category;
 
   const svg = await satori(
     {
